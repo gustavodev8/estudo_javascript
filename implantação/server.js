@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// ✅ MIDDLEWARES ADICIONADOS
 app.use(cors());
 app.use(express.json());
 
@@ -40,7 +40,7 @@ app.post("/api/chat", async (req, res) => {
 
     if (!GEMINI_API_KEY) {
       return res.status(500).json({ 
-        error: "❌ Chave da API Gemini não configurada. Verifique o arquivo .env" 
+        error: "❌ Chave da API Gemini não configurada. Verifique as variáveis de ambiente" 
       });
     }
 
@@ -48,7 +48,7 @@ app.post("/api/chat", async (req, res) => {
 
     // ✅ CHAMADA CORRETA usando a biblioteca oficial
     const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash", // ou "gemini-pro"
+      model: "gemini-2.0-flash",
       contents: message,
     });
 
@@ -80,7 +80,7 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// Inicia o servidor
+// ✅ APENAS UM app.listen()
 app.listen(PORT, () => {
   console.log(`\n🚀 Servidor Gemini Chat iniciado!`);
   console.log(`📍 URL: http://localhost:${PORT}`);
@@ -91,6 +91,6 @@ app.listen(PORT, () => {
     console.log(`\n❌ CONFIGURAÇÃO NECESSÁRIA:`);
     console.log(`1. Acesse: https://aistudio.google.com/app/apikey`);
     console.log(`2. Crie uma nova API Key`);
-    console.log(`3. Adicione no arquivo .env: GEMINI_API_KEY=sua_chave_aqui`);
+    console.log(`3. Adicione nas variáveis de ambiente do Railway`);
   }
 });
