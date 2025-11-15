@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Teste Backend Nura</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .test-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            transition: border 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .status.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .status-loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .result {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            min-height: 80px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .result h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .result pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Teste Backend Nura</h1>
+        <p class="subtitle">Verifique se o servidor está funcionando corretamente</p>
+        
+        <!-- Teste 1: Conexão -->
+        <div class="test-section">
+            <h3>🔌 Teste 1: Verificar Conexão</h3>
+            <p style="color: #666; margin-bottom: 15px; font-size: 14px;">
+                Testa se o servidor está online e respondendo
+            </p>
+            <button class="btn-primary" onclick="testarConexao()">
+                Testar Conexão
+            </button>
+        </div>
+        
+        <!-- Teste 2: Chat -->
+        <div class="test-section">
+            <h3>💬 Teste 2: Chat com Gemini</h3>
+            <p style="color: #666; margin-bottom: 15px; font-size: 14px;">
+                Envia uma mensagem para o Gemini e recebe a resposta
+            </p>
+            <input type="text" id="mensagem" placeholder="Digite sua mensagem..." value="Olá, você está funcionando?">
+            <button class="btn-secondary" onclick="testarChat()">
+                Enviar para Gemini
+            </button>
+        </div>
+        
+        <!-- Status -->
+        <div id="status" class="status"></div>
+        
+        <!-- Resultado -->
+        <div id="resultado" class="result"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000';
+        
+        function mostrarStatus(mensagem, tipo) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status status-${tipo} show`;
+            statusDiv.innerHTML = mensagem;
+        }
+        
+        function mostrarResultado(conteudo) {
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.className = 'result show';
+            resultadoDiv.innerHTML = conteudo;
+        }
+        
+        async function testarConexao() {
+            try {
+                mostrarStatus('⏳ Testando conexão com o servidor...', 'loading');
+                
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                if (data.status === 'online') {
+                    mostrarStatus('✅ SUCESSO! Backend está online e funcionando perfeitamente!', 'success');
+                    mostrarResultado(`
+                        <h4>📡 Resposta do Servidor:</h4>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p style="margin-top: 15px; color: #28a745; font-weight: 600;">
+                            ✓ Servidor está rodando na porta 3000<br>
+                            ✓ API está respondendo corretamente
+                        </p>
+                    `);
+                } else {
+                    throw new Error('Resposta inesperada do servidor');
+                }
+                
+            } catch (error) {
+                mostrarStatus('❌ ERRO! Não foi possível conectar ao servidor', 'error');
+                mostrarResultado(`
+                    <h4>⚠️ Erro de Conexão</h4>
+                    <p style="color: #721c24; margin: 10px 0;">${error.message}</p>
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <strong style="color: #856404;">Possíveis causas:</strong>
+                        <ul style="margin: 10px 0 0 20px; color: #856404;">
+                            <li>Backend não está rodando (execute: <code>node server.js</code>)</li>
+                            <li>Porta incorreta (verifique se é 3000)</li>
+                            <li>Firewall bloqueando a conexão</li>
+                        </ul>
+                    </div>
+                `);
+            }
+        }
+        
+        async function testarChat() {
+            const mensagem = document.getElementById('mensagem').value.trim();
+            
+            if (!mensagem) {
+                mostrarStatus('⚠️ Digite uma mensagem antes de enviar!', 'error');
+                return;
+            }
+            
+            try {
+                mostrarStatus('⏳ Enviando mensagem para o Gemini... Aguarde...', 'loading');
+                mostrarResultado('<p style="text-align: center; padding: 20px;">Processando...</p>');
+                
+                const response = await fetch(`${API_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: mensagem })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    mostrarStatus('✅ SUCESSO! Gemini respondeu sua mensagem!', 'success');
+                    mostrarResultado(`
+                        <h4>💭 Você perguntou:</h4>
+                        <p style="background: #e9ecef; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            ${mensagem}
+                        </p>
+                        
+                        <h4 style="margin-top: 20px;">🤖 Gemini respondeu:</h4>
+                        <p style="background: #d4edda; padding: 15px; border-radius: 8px; margin: 10px 0; color: #155724;">
+                            ${data.reply}
+                        </p>
+                        
+                        <p style="margin-top: 15px; color: #28a745; font-weight: 600;">
+                            ✓ Backend funcionando 100%<br>
+                            ✓ Gemini integrado e respondendo<br>
+                            ✓ Pronto para integrar no seu frontend!
+                        </p>
+                    `);
+                } else {
+                    throw new Error(data.error || 'Erro desconhecido');
+                }
+                
+            } catch (error) {
+                mostrarStatus('❌ ERRO ao processar mensagem', 'error');
+                mostrarResultado(`
+                    <h4>⚠️ Erro na Comunicação</h4>
+                    <p style="color: #721c24; margin: 10px 0;">${error.message}</p>
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <strong style="color: #856404;">Possíveis causas:</strong>
+                        <ul style="margin: 10px 0 0 20px; color: #856404;">
+                            <li>API Key do Gemini inválida ou ausente no arquivo .env</li>
+                            <li>Erro de CORS (verifique configuração)</li>
+                            <li>Gemini API fora do ar (improvável)</li>
+                            <li>Limite de requisições atingido</li>
+                        </ul>
+                    </div>
+                `);
+            }
+        }
+        
+        // Testar conexão automaticamente ao carregar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testarConexao();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
